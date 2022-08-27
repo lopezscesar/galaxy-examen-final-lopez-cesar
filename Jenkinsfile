@@ -10,8 +10,6 @@ pipeline {
             }
             steps {
                 sh 'mvn package'
-            }
-            steps {
                 sh 'echo "Listar RUTA"'
                 sh 'ls -l target/'
             }
@@ -24,7 +22,7 @@ pipeline {
         stage('SonarQube') {
             steps {
                 script{
-                    def scannerHome = tool 'scanner-default';;
+                    def scannerHome = tool 'scanner-default';
                     withSonarQubeEnv('sonar-server') {
                         sh "${scannerHome}/bin/sonar-scanner \
                             -Dsonar.projectKey=labmaven \
@@ -40,7 +38,7 @@ pipeline {
                             -Dsonar.java.coveragePlugin=jacoco \
                             -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco.xml \
                             -Dsonar.exclusions=**/*IT.java,**/*TEST.java,**/*Test.java,**/src/it**,**/src/test**,**/gradle/wrapper** \
-                            -Dsonar.java.libraries=target/labmaven-*.jar"
+                            -Dsonar.java.libraries=target/*.jar"
                         }
                     }
                 }
