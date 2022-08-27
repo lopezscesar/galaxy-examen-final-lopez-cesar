@@ -9,9 +9,12 @@ pipeline {
                 docker { image 'maven:3.6.3-openjdk-11-slim' }
             }
             steps {
-                sh 'mvn clean verify'
+                sh 'mvn package'
             }
-
+            steps {
+                sh 'echo "Listar RUTA"'
+                sh 'ls -l target/'
+            }
             post{
                 success {
                     archiveArtifacts artifacts: 'target/labmaven-*.jar', fingerprint: true, onlyIfSuccessful: true
